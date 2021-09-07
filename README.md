@@ -1,5 +1,3 @@
-# @login-with-metamask/backend
-
 ## Deploy to Heroku
 
 This Express app is deployed to Heroku via the command `yarn deploy:backend` from the root folder.
