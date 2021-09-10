@@ -20,6 +20,7 @@ export class User extends Model {
 	public followers!: number;
 	public following!: number;
 	public totalCollection!: number;
+	public totalCreations!: number;
 	public favorites?: string;
 	public totalFavorites?: number;
 }

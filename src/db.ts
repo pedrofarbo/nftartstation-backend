@@ -1,6 +1,6 @@
 import os from 'os';
 import path from 'path';
-import { INTEGER, Sequelize, STRING, BOOLEAN } from 'sequelize';
+import { INTEGER, Sequelize, STRING, BOOLEAN, TEXT } from 'sequelize';
 
 import { User } from './models';
 
@@ -31,7 +31,7 @@ User.init(
 		},
 		avatar: {
 			allowNull: true,
-			type: STRING,
+			type: TEXT,
 			unique: false
 		},
 		location: {
@@ -100,6 +100,11 @@ User.init(
 			defaultValue: (): number => 0,
 		},
 		totalCollection: {
+			allowNull: false,
+			type: INTEGER,
+			defaultValue: (): number => 0,
+		},
+		totalCreations: {
 			allowNull: false,
 			type: INTEGER,
 			defaultValue: (): number => 0,
