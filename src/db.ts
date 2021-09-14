@@ -41,7 +41,7 @@ User.init(
 		},
 		bio: {
 			allowNull: true,
-			type: STRING,
+			type: TEXT,
 			unique: false
 		},
 		website: {

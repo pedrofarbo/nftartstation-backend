@@ -16,6 +16,102 @@ export const find = (req: Request, res: Response, next: NextFunction) => {
 		.catch(next);
 };
 
+export const findByUsername = (req: Request, res: Response, next: NextFunction) => {
+	const whereClause =
+		req.query && req.query.username
+			? {
+				where: { username: req.query.username },
+			}
+			: undefined;
+
+	let response: any = {};
+
+	try {
+		User.findOne(whereClause)
+			.then((user: any | null) => {
+
+				if (user) {
+					const data = user.dataValues;
+
+					response.publicAddress = data.publicAddress;
+					response.username = data.username;
+					response.totalCollection = data.totalCollection;
+					response.totalCreations = data.totalCreations;
+					response.followers = data.followers;
+					response.following = data.following;
+					response.bio = data.bio;
+					response.avatar = data.avatar;
+					response.artist = data.artist;
+					response.website = data.website;
+					response.instagramUrl = data.instagramUrl;
+					response.facebookUrl = data.facebookUrl;
+					response.discordUrl = data.discordUrl;
+					response.twitterUrl = data.twitterUrl;
+					response.youtubeUrl = data.youtubeUrl;
+					response.name = data.name;
+					response.location = data.location;
+
+					res.json(response);
+				} else {
+					res.json(null);
+				}
+			}).catch(next);
+
+	} catch (err) {
+		console.log(err);
+	}
+
+	return response;
+};
+
+export const findByPublicAddress = (req: Request, res: Response, next: NextFunction) => {
+	const whereClause =
+		req.query && req.query.publicAddress
+			? {
+				where: { publicAddress: req.query.publicAddress },
+			}
+			: undefined;
+
+	let response: any = {};
+
+	try {
+		User.findOne(whereClause)
+			.then((user: any | null) => {
+
+				if (user) {
+					const data = user.dataValues;
+
+					response.publicAddress = data.publicAddress;
+					response.username = data.username;
+					response.totalCollection = data.totalCollection;
+					response.totalCreations = data.totalCreations;
+					response.followers = data.followers;
+					response.following = data.following;
+					response.bio = data.bio;
+					response.avatar = data.avatar;
+					response.artist = data.artist;
+					response.website = data.website;
+					response.instagramUrl = data.instagramUrl;
+					response.facebookUrl = data.facebookUrl;
+					response.discordUrl = data.discordUrl;
+					response.twitterUrl = data.twitterUrl;
+					response.youtubeUrl = data.youtubeUrl;
+					response.name = data.name;
+					response.location = data.location;
+
+					res.json(response);
+				} else {
+					res.json(null);
+				}
+			}).catch(next);
+
+	} catch (err) {
+		console.log(err);
+	}
+
+	return response;
+};
+
 export const get = (req: Request, res: Response, next: NextFunction) => {
 	// AccessToken payload is in req.user.payload, especially its `id` field
 	// UserId is the param in /users/:userId
@@ -35,6 +131,39 @@ export const create = (req: Request, res: Response, next: NextFunction) =>
 		.then((user: User) => res.json(user))
 		.catch(next);
 
+export const searchNames = (req: Request, res: Response, next: NextFunction) => {
+	let response: any = [];
+
+	req.body.array.forEach((element: any) => {
+		try {
+			const whereClause = {
+				where: { publicAddress: element },
+			};
+
+			User.findOne(whereClause)
+				.then((user: any | null) => {
+
+					if (user) {
+						const data = user.dataValues;
+
+						response.publicAddress = data.publicAddress;
+						response.username = data.username;
+						response.avatar = data.avatar;
+						
+						res.json(response);
+					} else {
+						res.json(null);
+					}
+				}).catch(next);
+
+		} catch (err) {
+			console.log(err);
+		}
+	});
+
+	return response;
+}
+
 export const patch = (req: Request, res: Response, next: NextFunction) => {
 
 	try {
@@ -50,17 +179,18 @@ export const patch = (req: Request, res: Response, next: NextFunction) => {
 					return user;
 				}
 
-				JSON.stringify(req.body, function(key, value) {
-					// if value is null, return "" as a replacement
-					if(value === '') {
+				const data = JSON.stringify(req.body, function (key, value) {
+					if (value === '' || value === "") {
 						return null;
 					}
-				
+
 					// otherwise, leave the value unchanged
 					return value;
 				});
 
-				Object.assign(user, req.body);
+				const dataJson = JSON.parse(data);
+
+				Object.assign(user, dataJson);
 				return user.save();
 			})
 			.then((user: User | null) => {
