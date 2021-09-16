@@ -12,8 +12,8 @@ artistRouter.route('/form/submit').post(jwt(config), controller.submit);
 
 /** GET /api/artist/form/:formId/approve */
 /** Authenticated route */
-artistRouter.route('/form/:formId/approve').get(jwt(config), controller.approve);
+artistRouter.route('/form/:formId/approve').get(controller.approve);
 
 /** GET /api/artist/form/:formId/approve */
 /** Authenticated route */
-artistRouter.route('/form/:formId/decline').get(jwt(config), controller.decline);
+artistRouter.route('/form/:formId/decline').get(controller.decline);

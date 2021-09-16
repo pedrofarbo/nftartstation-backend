@@ -20,9 +20,9 @@ User.init(
 			type: INTEGER,
 			defaultValue: (): number => Math.floor(Math.random() * 10000),
 		},
-		inviteId: {
+		inviteCode: {
 			allowNull: true,
-			type: INTEGER,
+			type: STRING,
 		},
 		publicAddress: {
 			allowNull: false,
@@ -136,19 +136,19 @@ User.init(
 ArtistForm.init(
 	{
 		userId: {
-			allowNull: true,
+			allowNull: false,
 			type: INTEGER,
 		},
 		invitedBy: {
-			allowNull: true,
+			allowNull: false,
 			type: STRING,
 		},
-		inviteId: {
-			allowNull: true,
-			type: INTEGER,
+		inviteCode: {
+			allowNull: false,
+			type: STRING,
 		},
 		name: {
-			allowNull: true,
+			allowNull: false,
 			type: STRING,
 			unique: false
 		},
@@ -158,12 +158,12 @@ ArtistForm.init(
 			unique: false
 		},
 		location: {
-			allowNull: true,
+			allowNull: false,
 			type: STRING,
 			unique: false
 		},
 		bio: {
-			allowNull: true,
+			allowNull: false,
 			type: TEXT,
 			unique: false
 		},
@@ -198,12 +198,7 @@ ArtistForm.init(
 			unique: true
 		},
 		email: {
-			allowNull: true,
-			type: STRING,
-			unique: true,
-		},
-		username: {
-			allowNull: true,
+			allowNull: false,
 			type: STRING,
 			unique: true,
 		},
@@ -223,6 +218,11 @@ ArtistForm.init(
 		userApproval: {
 			allowNull: true,
 			type: INTEGER
+		},
+		status: {
+			allowNull: false,
+			type: STRING,
+			defaultValue: (): string => 'new',
 		},
 	},
 	{

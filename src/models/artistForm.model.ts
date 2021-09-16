@@ -4,7 +4,7 @@ export class ArtistForm extends Model {
 	public id!: number;
 	public userId!: number;
 	public invitedBy?: string;
-	public inviteId!: number;
+	public inviteCode!: string;
 	public name?: string;
 	public avatar?: string;
 	public email?: string;
@@ -20,4 +20,5 @@ export class ArtistForm extends Model {
 	public createdDate!: Date;
 	public approvalDate?: Date;
 	public userApproval?: string;
+	public status!: string; //approved, declined, new
 }

@@ -3,7 +3,7 @@ import { Invite } from './invite.model';
 
 export class User extends Model {
 	public id!: number;
-	public inviteId?: Invite;
+	public inviteCode?: string;
 	public nonce!: number;
 	public publicAddress!: string;
 	public name?: string;
