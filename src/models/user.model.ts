@@ -1,7 +1,9 @@
 import { Model } from 'sequelize';
+import { Invite } from './invite.model';
 
 export class User extends Model {
 	public id!: number;
+	public inviteId?: Invite;
 	public nonce!: number;
 	public publicAddress!: string;
 	public name?: string;

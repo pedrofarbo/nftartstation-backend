@@ -1,8 +1,10 @@
 import os from 'os';
 import path from 'path';
-import { INTEGER, Sequelize, STRING, BOOLEAN, TEXT } from 'sequelize';
+import { INTEGER, Sequelize, STRING, BOOLEAN, TEXT, JSONB, DATE } from 'sequelize';
 
 import { User } from './models';
+import { Invite } from './models/invite.model';
+import { ArtistForm } from './models/artistForm.model';
 
 const sequelize = new Sequelize('nftartstation', 'root', 'root', {
 	dialect: 'postgres',
@@ -17,6 +19,10 @@ User.init(
 			allowNull: false,
 			type: INTEGER,
 			defaultValue: (): number => Math.floor(Math.random() * 10000),
+		},
+		inviteId: {
+			allowNull: true,
+			type: INTEGER,
 		},
 		publicAddress: {
 			allowNull: false,
@@ -87,7 +93,7 @@ User.init(
 		artist: {
 			allowNull: false,
 			type: BOOLEAN,
-			defaultValue: (): boolean => true,
+			defaultValue: (): boolean => false,
 		},
 		followers: {
 			allowNull: false,
@@ -111,8 +117,8 @@ User.init(
 		},
 		favorites: {
 			allowNull: true,
-			type: STRING,
-			defaultValue: (): string => "[]",
+			type: JSONB,
+			defaultValue: (): JSON => JSON.parse('[]'),
 		},
 		totalFavorites: {
 			allowNull: true,
@@ -126,6 +132,135 @@ User.init(
 		timestamps: false,
 	}
 );
+
+ArtistForm.init(
+	{
+		userId: {
+			allowNull: true,
+			type: INTEGER,
+		},
+		invitedBy: {
+			allowNull: true,
+			type: STRING,
+		},
+		inviteId: {
+			allowNull: true,
+			type: INTEGER,
+		},
+		name: {
+			allowNull: true,
+			type: STRING,
+			unique: false
+		},
+		avatar: {
+			allowNull: true,
+			type: TEXT,
+			unique: false
+		},
+		location: {
+			allowNull: true,
+			type: STRING,
+			unique: false
+		},
+		bio: {
+			allowNull: true,
+			type: TEXT,
+			unique: false
+		},
+		website: {
+			allowNull: true,
+			type: STRING,
+			unique: true
+		},
+		instagramUrl: {
+			allowNull: true,
+			type: STRING,
+			unique: true
+		},
+		facebookUrl: {
+			allowNull: true,
+			type: STRING,
+			unique: true
+		},
+		youtubeUrl: {
+			allowNull: true,
+			type: STRING,
+			unique: true
+		},
+		discordUrl: {
+			allowNull: true,
+			type: STRING,
+			unique: true
+		},
+		twitterUrl: {
+			allowNull: true,
+			type: STRING,
+			unique: true
+		},
+		email: {
+			allowNull: true,
+			type: STRING,
+			unique: true,
+		},
+		username: {
+			allowNull: true,
+			type: STRING,
+			unique: true,
+		},
+		portifolio: {
+			allowNull: false,
+			type: JSONB,
+			defaultValue: (): JSON => JSON.parse('[]'),
+		},
+		createdDate: {
+			allowNull: false,
+			type: DATE
+		},
+		approvalDate: {
+			allowNull: true,
+			type: DATE
+		},
+		userApproval: {
+			allowNull: true,
+			type: INTEGER
+		},
+	},
+	{
+		modelName: 'artistForm',
+		sequelize, // This bit is important
+		timestamps: false,
+	}
+);
+
+Invite.init({
+	inviteCode: {
+		unique: true,
+		allowNull: false,
+		type: STRING,
+	},
+	createdDate: {
+		allowNull: false,
+		type: DATE,
+	},
+	active: {
+		allowNull: false,
+		type: BOOLEAN,
+		defaultValue: (): Boolean => true
+	},
+	userId: {
+		allowNull: true,
+		type: INTEGER,
+	},
+	userName: {
+		allowNull: true,
+		type: STRING,
+	},
+},
+	{
+		modelName: 'invite',
+		sequelize, // This bit is important
+		timestamps: false,
+	})
 
 // Create new tables
 sequelize.sync();

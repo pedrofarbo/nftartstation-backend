@@ -75,8 +75,13 @@ export const findByPublicAddress = (req: Request, res: Response, next: NextFunct
 	let response: any = {};
 
 	try {
+		console.log(req.query.publicAddress);
+		console.log(whereClause);
+
 		User.findOne(whereClause)
 			.then((user: any | null) => {
+
+				console.log(user);
 
 				if (user) {
 					const data = user.dataValues;
@@ -133,35 +138,34 @@ export const create = (req: Request, res: Response, next: NextFunction) =>
 
 export const searchNames = (req: Request, res: Response, next: NextFunction) => {
 	let response: any = [];
+	let responseItem: any = {};
 
-	req.body.array.forEach((element: any) => {
-		try {
-			const whereClause = {
-				where: { publicAddress: element },
-			};
+	try {
+		console.log(req.body)
+		User.findAll({ where: { publicAddress: req.body }}).then((users: any[] | null) => {
 
-			User.findOne(whereClause)
-				.then((user: any | null) => {
+			if (users && users.length > 0) {
+				users.forEach((u) => {
+					const data = u.dataValues;
 
-					if (user) {
-						const data = user.dataValues;
+					console.log(data);
 
-						response.publicAddress = data.publicAddress;
-						response.username = data.username;
-						response.avatar = data.avatar;
-						
-						res.json(response);
-					} else {
-						res.json(null);
-					}
-				}).catch(next);
+					responseItem.publicAddress = data.publicAddress;
+					responseItem.username = data.username;
+					responseItem.avatar = data.avatar;
 
-		} catch (err) {
-			console.log(err);
-		}
-	});
+					response.push(responseItem);
+				})
 
-	return response;
+				if (response.length > 0) {
+					return res.json(response);
+				}
+			}
+		}).catch(next);
+
+	} catch (err) {
+		console.log(err);
+	}
 }
 
 export const patch = (req: Request, res: Response, next: NextFunction) => {
