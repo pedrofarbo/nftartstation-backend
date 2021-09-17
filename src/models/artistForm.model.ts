@@ -2,6 +2,7 @@ import { Model } from 'sequelize';
 
 export class ArtistForm extends Model {
 	public id!: number;
+	public username!: string; 
 	public userId!: number;
 	public invitedBy?: string;
 	public inviteCode!: string;
@@ -18,7 +19,7 @@ export class ArtistForm extends Model {
     public twitterUrl?: string;
 	public portifolio!: JSON;
 	public createdDate!: Date;
-	public approvalDate?: Date;
-	public userApproval?: string;
+	public reviewerDate?: Date;
+	public reviewerUser?: string;
 	public status!: string; //approved, declined, new
 }

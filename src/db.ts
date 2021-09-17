@@ -135,9 +135,15 @@ User.init(
 
 ArtistForm.init(
 	{
+		username: {
+			allowNull: false,
+			type: STRING,
+			unique: true,
+		},
 		userId: {
 			allowNull: false,
 			type: INTEGER,
+			unique: true
 		},
 		invitedBy: {
 			allowNull: false,
@@ -211,13 +217,13 @@ ArtistForm.init(
 			allowNull: false,
 			type: DATE
 		},
-		approvalDate: {
+		reviewerDate: {
 			allowNull: true,
 			type: DATE
 		},
-		userApproval: {
+		reviewerUser: {
 			allowNull: true,
-			type: INTEGER
+			type: STRING
 		},
 		status: {
 			allowNull: false,
@@ -251,7 +257,7 @@ Invite.init({
 		allowNull: true,
 		type: INTEGER,
 	},
-	userName: {
+	username: {
 		allowNull: true,
 		type: STRING,
 	},

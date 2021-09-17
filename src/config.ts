@@ -8,5 +8,7 @@ export const config = {
     emailPort: 465,
     emailUser: "pedrofarbo@gmail.com",
     emailPassword: "p16h12(*)F1993",
-    keyMaster: "ZJkdLIftKJl6(*sG8mBK$ViPeqkIyI"
+    keyMaster: "ZJkdLIftKJl6(*sG8mBK$ViPeqkIyI",
+    basePath: 'http://localhost:8000/',
+    inviteTimes: 2
 };

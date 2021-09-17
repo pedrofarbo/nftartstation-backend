@@ -6,5 +6,5 @@ export class Invite extends Model {
 	public createdDate!: string;
     public active!: string;
 	public userId?: number;
-	public userName?: string;
+	public username?: string;
 }

@@ -17,6 +17,13 @@ export const find = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const findByUsername = (req: Request, res: Response, next: NextFunction) => {
+
+	if(req.query && !req.query.username) {
+		return res
+			.status(400)
+			.send({ error: 'You need to pass the username param' });
+	}
+
 	const whereClause =
 		req.query && req.query.username
 			? {
@@ -25,6 +32,8 @@ export const findByUsername = (req: Request, res: Response, next: NextFunction) 
 			: undefined;
 
 	let response: any = {};
+
+	console.log(req.query);
 
 	try {
 		User.findOne(whereClause)
